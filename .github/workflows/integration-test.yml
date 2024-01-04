@@ -23,6 +23,8 @@ jobs:
         npm run build
     - name: Set up Gradle
       uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: current
     - name: Set up build scan
       id: setup-build-scan
       uses: ./
@@ -32,4 +34,4 @@ jobs:
           touch settings.gradle
       shell: bash
     - name: Execute Gradle build
-      run: ./gradlew help
+      run: gradle help
