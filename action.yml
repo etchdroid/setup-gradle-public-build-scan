@@ -1,0 +1,9 @@
+name: 'Setup build scan'
+description: 'Sets up build scan support in your GitHub Actions workflow.'
+author: 'Benjamin Muschko'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+branding:
+  icon: 'activity'
+  color: 'blue'
