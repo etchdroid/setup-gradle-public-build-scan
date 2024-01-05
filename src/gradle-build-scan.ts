@@ -2,7 +2,6 @@ import * as path from 'path'
 import * as os from 'os'
 import * as fs from 'fs'
 import * as lodash from 'lodash'
-
 import * as core from '@actions/core'
 
 export async function setup(): Promise<void> {
@@ -15,7 +14,7 @@ export async function setup(): Promise<void> {
     const initScriptFile = path.resolve(`${initScriptDir}/build-scan.gradle`)
 
     if (!fs.existsSync(initScriptFile)) {
-        const buildScanConfig = readResourceFileAsString('build-scan.gradle', 'utf-8')
+        const buildScanConfig = readResourceFileAsString('build-scan.gradle')
         const templateVars = {gradleEnterprisePluginVersion: '3.16.1'}
         lodash.templateSettings.interpolate = /\${([\s\S]+?)}/g
         const compiled = lodash.template(buildScanConfig)
