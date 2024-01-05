@@ -1,6 +1,9 @@
 import * as path from 'path'
 import * as os from 'os'
 import * as fs from 'fs'
+import * as lodash from 'lodash'
+
+import * as core from '@actions/core'
 
 export async function setup(): Promise<void> {
     const initScriptDir = await determineInitScriptDir()
@@ -9,31 +12,18 @@ export async function setup(): Promise<void> {
         fs.mkdirSync(initScriptDir, {recursive: true})
     }
 
-    const initScript = path.resolve(`${initScriptDir}/build-scan.gradle`)
-    const buildScanConfig = `import com.gradle.enterprise.gradleplugin.GradleEnterprisePlugin
+    const initScriptFile = path.resolve(`${initScriptDir}/build-scan.gradle`)
 
-    initscript {
-        repositories {
-            gradlePluginPortal()
-        }
-        dependencies {
-            classpath("com.gradle:gradle-enterprise-gradle-plugin:3.16.1")
-        }
+    if (!fs.existsSync(initScriptFile)) {
+        const buildScanConfig = fs.readFileSync('./resources/build-scan.gradle', 'utf-8')
+        const templateVars = {gradleEnterprisePluginVersion: '3.16.1'}
+        lodash.templateSettings.interpolate = /\${([\s\S]+?)}/g
+        const compiled = lodash.template(buildScanConfig)
+        const initScriptContent = compiled(templateVars)
+        fs.writeFileSync(initScriptFile, initScriptContent)
+    } else {
+        core.error(`The initializing script '${initScriptFile}' already exists. Skipped creation!`)
     }
-
-    settingsEvaluated { settings ->
-        settings.pluginManager.apply(GradleEnterprisePlugin)
-
-        settings.gradleEnterprise {
-            buildScan {
-                publishAlways()
-                termsOfServiceUrl = "https://gradle.com/terms-of-service"
-                termsOfServiceAgree = "yes"
-            }
-        }
-    }`
-
-    fs.writeFileSync(initScript, buildScanConfig)
 }
 
 async function determineInitScriptDir(): Promise<string> {
