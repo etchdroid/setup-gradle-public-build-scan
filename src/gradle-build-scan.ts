@@ -15,7 +15,7 @@ export async function setup(): Promise<void> {
     const initScriptFile = path.resolve(`${initScriptDir}/build-scan.gradle`)
 
     if (!fs.existsSync(initScriptFile)) {
-        const buildScanConfig = fs.readFileSync('./resources/build-scan.gradle', 'utf-8')
+        const buildScanConfig = readResourceFileAsString('build-scan.gradle', 'utf-8')
         const templateVars = {gradleEnterprisePluginVersion: '3.16.1'}
         lodash.templateSettings.interpolate = /\${([\s\S]+?)}/g
         const compiled = lodash.template(buildScanConfig)
@@ -43,4 +43,9 @@ async function determineGradleUserHome(): Promise<string> {
 
 function workspaceDirectory(): string {
     return process.env['GITHUB_WORKSPACE'] || ''
+}
+
+function readResourceFileAsString(...paths: string[]): string {
+    const absolutePath = path.resolve(__dirname, '..', '..', 'src', 'resources', ...paths)
+    return fs.readFileSync(absolutePath, 'utf8')
 }
