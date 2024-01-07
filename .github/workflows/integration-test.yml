@@ -24,13 +24,13 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         gradle-version: current
-    - name: Set up build scan
-      id: setup-build-scan
-      uses: ./
     - name: Create build files
       run: |
           touch build.gradle
           touch settings.gradle
       shell: bash
+    - name: Set up build scan
+      id: setup-build-scan
+      uses: ./
     - name: Execute Gradle build
       run: gradle help
