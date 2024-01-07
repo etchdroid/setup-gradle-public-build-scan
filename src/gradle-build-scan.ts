@@ -3,6 +3,7 @@ import * as os from 'os'
 import * as fs from 'fs'
 import * as lodash from 'lodash'
 import * as core from '@actions/core'
+import {workspaceDirectory} from './build-env'
 
 export async function setup(): Promise<void> {
     const initScriptDir = await determineInitScriptDir()
@@ -11,7 +12,7 @@ export async function setup(): Promise<void> {
         fs.mkdirSync(initScriptDir, {recursive: true})
     }
 
-    const initScriptFile = path.resolve(`${initScriptDir}/build-scan.gradle`)
+    const initScriptFile = path.join(initScriptDir, 'build-scan.gradle')
 
     if (!fs.existsSync(initScriptFile)) {
         const buildScanConfig = readResourceFileAsString('build-scan.gradle')
@@ -40,11 +41,7 @@ async function determineGradleUserHome(): Promise<string> {
     return path.resolve(os.homedir(), '.gradle')
 }
 
-function workspaceDirectory(): string {
-    return process.env['GITHUB_WORKSPACE'] || ''
-}
-
 function readResourceFileAsString(...paths: string[]): string {
     const absolutePath = path.resolve(__dirname, '..', '..', 'src', 'resources', ...paths)
-    return fs.readFileSync(absolutePath, 'utf8')
+    return fs.readFileSync(absolutePath, 'utf-8')
 }
