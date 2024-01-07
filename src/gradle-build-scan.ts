@@ -3,7 +3,7 @@ import * as os from 'os'
 import * as fs from 'fs'
 import * as lodash from 'lodash'
 import * as core from '@actions/core'
-import {workspaceDirectory} from './build-env'
+import {workspaceDirectory, readResourceFileAsString} from './build-env'
 
 export async function setup(): Promise<void> {
     const initScriptDir = await determineInitScriptDir()
@@ -15,7 +15,7 @@ export async function setup(): Promise<void> {
     const initScriptFile = path.join(initScriptDir, 'build-scan.gradle')
 
     if (!fs.existsSync(initScriptFile)) {
-        await writeInitScript(initScriptFile, '3.16.1')
+        await writeInitScript(initScriptFile, core.getInput('gradleEnterprisePluginVersion'))
     } else {
         core.error(`The initializing script '${initScriptFile}' already exists. Skipped creation!`)
     }
@@ -43,9 +43,4 @@ async function determineGradleUserHome(): Promise<string> {
     }
 
     return path.resolve(os.homedir(), '.gradle')
-}
-
-function readResourceFileAsString(...paths: string[]): string {
-    const absolutePath = path.resolve(__dirname, 'resources', ...paths)
-    return fs.readFileSync(absolutePath, 'utf-8')
 }
