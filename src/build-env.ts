@@ -16,9 +16,7 @@ export function getBuildTool(): BuildTool {
         return BuildTool.SBT
     }
 
-    throw TypeError(
-        `Could not detect a Gradle, Maven, or SBT file in the directory ${workspaceDir}.`
-    )
+    throw TypeError(`Could not detect a Gradle, Maven, or SBT file in the directory ${workspaceDir}.`)
 }
 
 export function workspaceDirectory(): string {

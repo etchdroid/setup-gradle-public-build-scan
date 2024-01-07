@@ -42,6 +42,6 @@ async function determineGradleUserHome(): Promise<string> {
 }
 
 function readResourceFileAsString(...paths: string[]): string {
-    const absolutePath = path.resolve(__dirname, '..', '..', 'src', 'resources', ...paths)
+    const absolutePath = path.resolve(__dirname, 'resources', ...paths)
     return fs.readFileSync(absolutePath, 'utf-8')
 }

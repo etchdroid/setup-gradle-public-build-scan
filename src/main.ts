@@ -7,9 +7,10 @@ export async function run(): Promise<void> {
     try {
         const buildTool = buildEnv.getBuildTool()
 
-        switch(buildTool) {
-            case buildEnv.BuildTool.Gradle: gradleBuildScan.setup()
-                                            break
+        switch (buildTool) {
+            case buildEnv.BuildTool.Gradle:
+                gradleBuildScan.setup()
+                break
         }
     } catch (error) {
         core.setFailed(String(error))
