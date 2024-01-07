@@ -8,8 +8,9 @@
         "format": "prettier --write **/*.ts",
         "format-check": "prettier --check **/*.ts",
         "lint": "eslint src/**/*.ts",
-        "compile": "ncc build src/main.ts --out dist && cp ./src/resources/*.* ./dist/resources",
-        "build": "npm run check && npm run compile",
+        "copy-resources": "cp ./src/resources/*.* ./dist/resources",
+        "compile": "ncc build src/main.ts --out dist",
+        "build": "npm run check && npm run compile && npm run copy-resources",
         "check": "npm run format && npm run lint",
         "test": "jest"
     },
