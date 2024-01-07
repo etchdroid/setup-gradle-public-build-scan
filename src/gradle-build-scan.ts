@@ -15,7 +15,7 @@ export async function setup(): Promise<void> {
     const initScriptFile = path.join(initScriptDir, 'build-scan.gradle')
 
     if (!fs.existsSync(initScriptFile)) {
-        await writeInitScript(initScriptFile, core.getInput('gradleEnterprisePluginVersion'))
+        await writeInitScript(initScriptFile, core.getInput('gradle-enterprise-plugin-version'))
     } else {
         core.error(`The initializing script '${initScriptFile}' already exists. Skipped creation!`)
     }
