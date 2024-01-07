@@ -15,15 +15,19 @@ export async function setup(): Promise<void> {
     const initScriptFile = path.join(initScriptDir, 'build-scan.gradle')
 
     if (!fs.existsSync(initScriptFile)) {
-        const buildScanConfig = readResourceFileAsString('build-scan.gradle')
-        const templateVars = {gradleEnterprisePluginVersion: '3.16.1'}
-        lodash.templateSettings.interpolate = /\${([\s\S]+?)}/g
-        const compiled = lodash.template(buildScanConfig)
-        const initScriptContent = compiled(templateVars)
-        fs.writeFileSync(initScriptFile, initScriptContent)
+        await writeInitScript(initScriptFile, '3.16.1')
     } else {
         core.error(`The initializing script '${initScriptFile}' already exists. Skipped creation!`)
     }
+}
+
+async function writeInitScript(initScriptFile: string, pluginVersion: string) {
+    const buildScanConfig = readResourceFileAsString('build-scan.gradle')
+    const templateVars = {gradleEnterprisePluginVersion: pluginVersion}
+    lodash.templateSettings.interpolate = /\${([\s\S]+?)}/g
+    const compiled = lodash.template(buildScanConfig)
+    const initScriptContent = compiled(templateVars)
+    fs.writeFileSync(initScriptFile, initScriptContent)
 }
 
 async function determineInitScriptDir(): Promise<string> {
