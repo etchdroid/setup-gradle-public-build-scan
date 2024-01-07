@@ -21,7 +21,7 @@ export async function setup(): Promise<void> {
     }
 }
 
-async function writeInitScript(initScriptFile: string, pluginVersion: string) {
+async function writeInitScript(initScriptFile: string, pluginVersion: string): Promise<void> {
     const buildScanConfig = readResourceFileAsString('build-scan.gradle')
     const templateVars = {gradleEnterprisePluginVersion: pluginVersion}
     lodash.templateSettings.interpolate = /\${([\s\S]+?)}/g
