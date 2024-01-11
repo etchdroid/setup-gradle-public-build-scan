@@ -1,4 +1,4 @@
-name: Integration Test
+name: Integration Test Gradle
 on: [push, pull_request]
 
 jobs:
