@@ -2,7 +2,7 @@ import * as path from 'path'
 import * as fs from 'fs'
 import * as core from '@actions/core'
 
-export function getSupportedBuildTools(): Array<BuildTool> {
+export function getSupportedBuildTools(): BuildTool[] {
     let buildTools: BuildTool[] = [];
 
     if (core.getInput('support-gradle')) {
