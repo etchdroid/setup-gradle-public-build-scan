@@ -1,22 +1,21 @@
 import * as path from 'path'
 import * as fs from 'fs'
+import * as core from '@actions/core'
 
-const workspaceDir = workspaceDirectory()
-const gradleSettingsFile = path.join(workspaceDir, 'settings.gradle')
-const gradleSettingsKtsFile = path.join(workspaceDir, 'settings.gradle.kts')
-const mavenPomFile = path.join(workspaceDir, 'pom.xml')
-const sbtBuildFile = path.join(workspaceDir, 'build.sbt')
+export function getSupportedBuildTools(): Array<BuildTool> {
+    let buildTools: BuildTool[] = [];
 
-export function getBuildTool(): BuildTool {
-    if (fs.existsSync(gradleSettingsFile) || fs.existsSync(gradleSettingsKtsFile)) {
-        return BuildTool.Gradle
-    } else if (fs.existsSync(mavenPomFile)) {
-        return BuildTool.Maven
-    } else if (fs.existsSync(sbtBuildFile)) {
-        return BuildTool.SBT
+    if (core.getInput('support-gradle')) {
+        buildTools.push(BuildTool.Gradle)
+    }
+    if (core.getInput('support-maven')) {
+        buildTools.push(BuildTool.Maven)
+    }
+    if (core.getInput('support-sbt')) {
+        buildTools.push(BuildTool.SBT)
     }
 
-    throw TypeError(`Could not detect a Gradle, Maven, or SBT file in the directory ${workspaceDir}.`)
+    return buildTools
 }
 
 export function workspaceDirectory(): string {

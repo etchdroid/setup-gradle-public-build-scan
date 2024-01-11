@@ -5,12 +5,10 @@ import * as gradleBuildScan from './gradle-build-scan'
 
 export async function run(): Promise<void> {
     try {
-        const buildTool = buildEnv.getBuildTool()
+        const buildTools = buildEnv.getSupportedBuildTools()
 
-        switch (buildTool) {
-            case buildEnv.BuildTool.Gradle:
-                gradleBuildScan.setup()
-                break
+        if (buildTools.includes(buildEnv.BuildTool.Gradle)) {
+            gradleBuildScan.setup()
         }
     } catch (error) {
         core.setFailed(String(error))

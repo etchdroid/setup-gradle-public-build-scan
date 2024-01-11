@@ -2,9 +2,23 @@ name: 'Setup build scan'
 description: 'Sets up build scan support in your GitHub Actions workflow.'
 author: 'Benjamin Muschko'
 inputs:
-  gradle-enterprise-plugin-version:
-    description: Gradle enterprise plugin version that provides build scan functionality.
+  support-gradle:
+    description: Enabled build scan support for Gradle.
+    type: boolean
+    default: false
+    required: false
+  support-maven:
+    description: Enabled build scan support for Maven.
+    type: boolean
+    default: false
+    required: false
+  develocity-gradle-plugin-version:
+    description: Develocity Gradle plugin version that provides build scan functionality.
     default: '3.16.1'
+    required: false
+  develocity-maven-extension-version:
+    description: Develocity Maven extension version that provides build scan functionality.
+    default: '1.20'
     required: false
 runs:
   using: 'node20'
