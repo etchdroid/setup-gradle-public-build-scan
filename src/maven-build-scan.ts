@@ -7,6 +7,7 @@ import {readResourceFileAsString} from './build-env'
 
 export async function setup(): Promise<void> {
     const mavenHomeDir = await determineMavenHomeDir()
+    core.debug(`Configured Maven home directory: ${mavenHomeDir}`)
 
     if (!fs.existsSync(mavenHomeDir)) {
         fs.mkdirSync(mavenHomeDir, {recursive: true})

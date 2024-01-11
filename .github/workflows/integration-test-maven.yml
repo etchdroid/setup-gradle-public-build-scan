@@ -31,4 +31,4 @@ jobs:
         support-maven: true
     - name: Execute Maven build
       working-directory: .github/sample-builds/maven-build
-      run: mvn verify
+      run: mvn install

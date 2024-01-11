@@ -7,6 +7,7 @@ import {readResourceFileAsString} from './build-env'
 
 export async function setup(): Promise<void> {
     const initScriptDir = await determineInitScriptDir()
+    core.debug(`Configured Gradle init script directory: ${initScriptDir}`)
 
     if (!fs.existsSync(initScriptDir)) {
         fs.mkdirSync(initScriptDir, {recursive: true})
