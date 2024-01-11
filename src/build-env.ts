@@ -3,7 +3,7 @@ import * as fs from 'fs'
 import * as core from '@actions/core'
 
 export function getSupportedBuildTools(): BuildTool[] {
-    let buildTools: BuildTool[] = [];
+    let buildTools: BuildTool[] = []
 
     if (core.getInput('support-gradle')) {
         buildTools.push(BuildTool.Gradle)
