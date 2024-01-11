@@ -15,6 +15,10 @@ export function getSupportedBuildTools(): BuildTool[] {
         buildTools.push(BuildTool.SBT)
     }
 
+    if (buildTools.length == 0) {
+        throw TypeError(`You need to select at least one build tool. Valid values are: ${Object.values(BuildTool)}`)
+    }
+
     return buildTools
 }
 
