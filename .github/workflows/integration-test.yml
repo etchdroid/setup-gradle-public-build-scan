@@ -27,6 +27,8 @@ jobs:
     - name: Set up build scan
       id: setup-build-scan
       uses: ./
+      with:
+        support-gradle: true
     - name: Execute Gradle build
       working-directory: .github/sample-builds/gradle-build
       run: gradle test
