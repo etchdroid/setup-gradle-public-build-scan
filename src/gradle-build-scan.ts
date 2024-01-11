@@ -3,7 +3,7 @@ import * as os from 'os'
 import * as fs from 'fs'
 import * as lodash from 'lodash'
 import * as core from '@actions/core'
-import {workspaceDirectory, readResourceFileAsString} from './build-env'
+import {readResourceFileAsString} from './build-env'
 
 export async function setup(): Promise<void> {
     const initScriptDir = await determineInitScriptDir()
@@ -17,17 +17,17 @@ export async function setup(): Promise<void> {
     if (!fs.existsSync(initScriptFile)) {
         await writeInitScript(initScriptFile, core.getInput('develocity-gradle-plugin-version'))
     } else {
-        core.error(`The initializing script '${initScriptFile}' already exists. Skipped creation!`)
+        core.error(`The Gradle initializing script '${initScriptFile}' already exists. Skipped creation!`)
     }
 }
 
 async function writeInitScript(initScriptFile: string, pluginVersion: string): Promise<void> {
-    const buildScanConfig = readResourceFileAsString('build-scan.gradle')
+    const buildScanTemplate = readResourceFileAsString('build-scan.gradle')
     const templateVars = {gradleEnterprisePluginVersion: pluginVersion}
     lodash.templateSettings.interpolate = /\${([\s\S]+?)}/g
-    const compiled = lodash.template(buildScanConfig)
-    const initScriptContent = compiled(templateVars)
-    fs.writeFileSync(initScriptFile, initScriptContent)
+    const compiled = lodash.template(buildScanTemplate)
+    const content = compiled(templateVars)
+    fs.writeFileSync(initScriptFile, content)
 }
 
 async function determineInitScriptDir(): Promise<string> {
@@ -35,11 +35,10 @@ async function determineInitScriptDir(): Promise<string> {
 }
 
 async function determineGradleUserHome(): Promise<string> {
-    const customGradleUserHome = process.env['GRADLE_USER_HOME']
+    const GradleUserHomeEnvVar = process.env['GRADLE_USER_HOME']
 
-    if (customGradleUserHome) {
-        const rootDir = workspaceDirectory()
-        return path.resolve(rootDir, customGradleUserHome)
+    if (GradleUserHomeEnvVar) {
+        return GradleUserHomeEnvVar
     }
 
     return path.resolve(os.homedir(), '.gradle')
