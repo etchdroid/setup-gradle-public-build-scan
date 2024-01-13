@@ -38,8 +38,8 @@ async function writeInitScript(
 ): Promise<void> {
     const buildScanTemplate = readResourceFileAsString('build-scan.gradle')
     const templateVars = {
-        gradleEnterprisePluginVersion: gradleEnterprisePluginVersion,
-        commonUserDataPluginVersion: commonUserDataPluginVersion
+        gradleEnterprisePluginVersion,
+        commonUserDataPluginVersion
     }
     lodash.templateSettings.interpolate = /\${([\s\S]+?)}/g
     const compiled = lodash.template(buildScanTemplate)
