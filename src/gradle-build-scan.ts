@@ -5,6 +5,9 @@ import * as lodash from 'lodash'
 import * as core from '@actions/core'
 import {readResourceFileAsString} from './build-env'
 
+const DEVELOCITY_PLUGIN_VERSION_INPUT ='develocity-gradle-plugin-version'
+const INIT_SCRIPT_PATH_OUTPUT = 'init-script-path'
+
 export async function setup(): Promise<void> {
     const initScriptDir = await determineInitScriptDir()
     core.debug(`Configured Gradle init script directory: ${initScriptDir}`)
@@ -16,8 +19,8 @@ export async function setup(): Promise<void> {
     const initScriptFile = path.join(initScriptDir, 'build-scan.gradle')
 
     if (!fs.existsSync(initScriptFile)) {
-        await writeInitScript(initScriptFile, core.getInput('develocity-gradle-plugin-version'))
-        core.setOutput('init-script-path', initScriptFile)
+        await writeInitScript(initScriptFile, core.getInput(DEVELOCITY_PLUGIN_VERSION_INPUT))
+        core.setOutput(INIT_SCRIPT_PATH_OUTPUT, initScriptFile)
     } else {
         core.error(`The Gradle initializing script '${initScriptFile}' already exists. Skipped creation!`)
     }
