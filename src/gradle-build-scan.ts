@@ -17,6 +17,7 @@ export async function setup(): Promise<void> {
 
     if (!fs.existsSync(initScriptFile)) {
         await writeInitScript(initScriptFile, core.getInput('develocity-gradle-plugin-version'))
+        core.setOutput('init-script-path', initScriptFile)
     } else {
         core.error(`The Gradle initializing script '${initScriptFile}' already exists. Skipped creation!`)
     }
