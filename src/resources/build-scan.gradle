@@ -1,4 +1,5 @@
 import com.gradle.enterprise.gradleplugin.GradleEnterprisePlugin
+import com.gradle.CommonCustomUserDataGradlePlugin
 
 initscript {
     repositories {
@@ -12,6 +13,7 @@ initscript {
 
 settingsEvaluated { settings ->
     settings.pluginManager.apply(GradleEnterprisePlugin)
+    settings.pluginManager.apply(CommonCustomUserDataGradlePlugin)
 
     settings.gradleEnterprise {
         buildScan {
