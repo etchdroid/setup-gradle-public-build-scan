@@ -3,7 +3,7 @@ import * as os from 'os'
 import * as fs from 'fs'
 import * as lodash from 'lodash'
 import * as core from '@actions/core'
-import {determineInitScriptDir,readResourceFileAsString} from './build-env'
+import {determineInitScriptDir, readResourceFileAsString} from './build-env'
 
 const DEVELOCITY_PLUGIN_VERSION_INPUT = 'develocity-gradle-plugin-version'
 const COMMON_USER_DATA_PLUGIN_VERSION_INPUT = 'common-user-data-plugin-version'
