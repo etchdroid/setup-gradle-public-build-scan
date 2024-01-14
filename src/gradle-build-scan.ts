@@ -1,5 +1,4 @@
 import * as path from 'path'
-import * as os from 'os'
 import * as fs from 'fs'
 import * as lodash from 'lodash'
 import * as core from '@actions/core'
