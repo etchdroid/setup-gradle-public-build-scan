@@ -8,6 +8,8 @@ import {readResourceFileAsString} from './build-env'
 const DEVELOCITY_PLUGIN_VERSION_INPUT = 'develocity-gradle-plugin-version'
 const COMMON_USER_DATA_PLUGIN_VERSION_INPUT = 'common-user-data-plugin-version'
 const INIT_SCRIPT_PATH_OUTPUT = 'init-script-path'
+const INIT_SCRIPT_TARGET_FILENAME = 'build-scan.gradle'
+const INIT_SCRIPT_TEMPLATE_FILENAME = 'build-scan-template.gradle'
 
 export async function setup(): Promise<void> {
     const initScriptDir = await determineInitScriptDir()
@@ -17,7 +19,7 @@ export async function setup(): Promise<void> {
         fs.mkdirSync(initScriptDir, {recursive: true})
     }
 
-    const initScriptFile = path.join(initScriptDir, 'build-scan.gradle')
+    const initScriptFile = path.join(initScriptDir, INIT_SCRIPT_TARGET_FILENAME)
 
     if (!fs.existsSync(initScriptFile)) {
         await writeInitScript(
@@ -36,7 +38,7 @@ async function writeInitScript(
     gradleEnterprisePluginVersion: string,
     commonUserDataPluginVersion: string
 ): Promise<void> {
-    const buildScanTemplate = readResourceFileAsString('build-scan.gradle')
+    const buildScanTemplate = readResourceFileAsString(INIT_SCRIPT_TEMPLATE_FILENAME)
     const templateVars = {
         gradleEnterprisePluginVersion,
         commonUserDataPluginVersion
@@ -52,10 +54,10 @@ async function determineInitScriptDir(): Promise<string> {
 }
 
 async function determineGradleUserHome(): Promise<string> {
-    const GradleUserHomeEnvVar = process.env['GRADLE_USER_HOME']
+    const gradleUserHomeEnvVar = process.env['GRADLE_USER_HOME']
 
-    if (GradleUserHomeEnvVar) {
-        return GradleUserHomeEnvVar
+    if (gradleUserHomeEnvVar) {
+        return gradleUserHomeEnvVar
     }
 
     return path.resolve(os.homedir(), '.gradle')
