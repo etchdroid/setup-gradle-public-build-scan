@@ -3,7 +3,7 @@ import * as os from 'os'
 import * as fs from 'fs'
 import * as lodash from 'lodash'
 import * as core from '@actions/core'
-import {readResourceFileAsString} from './build-env'
+import {determineInitScriptDir,readResourceFileAsString} from './build-env'
 
 const DEVELOCITY_PLUGIN_VERSION_INPUT = 'develocity-gradle-plugin-version'
 const COMMON_USER_DATA_PLUGIN_VERSION_INPUT = 'common-user-data-plugin-version'
@@ -12,7 +12,7 @@ const INIT_SCRIPT_TARGET_FILENAME = 'build-scan.gradle'
 const INIT_SCRIPT_TEMPLATE_FILENAME = 'build-scan-template.gradle'
 
 export async function setup(): Promise<void> {
-    const initScriptDir = await determineInitScriptDir()
+    const initScriptDir = determineInitScriptDir()
     core.debug(`Configured Gradle init script directory: ${initScriptDir}`)
 
     if (!fs.existsSync(initScriptDir)) {
@@ -47,18 +47,4 @@ async function writeInitScript(
     const compiled = lodash.template(buildScanTemplate)
     const content = compiled(templateVars)
     fs.writeFileSync(initScriptFile, content)
-}
-
-async function determineInitScriptDir(): Promise<string> {
-    return path.resolve(await determineGradleUserHome(), 'init.d')
-}
-
-async function determineGradleUserHome(): Promise<string> {
-    const gradleUserHomeEnvVar = process.env['GRADLE_USER_HOME']
-
-    if (gradleUserHomeEnvVar) {
-        return gradleUserHomeEnvVar
-    }
-
-    return path.resolve(os.homedir(), '.gradle')
 }
