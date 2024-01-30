@@ -1,5 +1,5 @@
 name: 'Setup build scan'
-description: 'Sets up build scan support in your GitHub Actions workflow.'
+description: 'Sets up Gradle build scan support in your GitHub Actions workflow.'
 author: 'Benjamin Muschko'
 inputs:
   develocity-gradle-plugin-version:
@@ -9,6 +9,9 @@ inputs:
   common-user-data-plugin-version:
     description: Gradle plugin version that provides common user data with build scan.
     default: '1.12.1'
+    required: false
+  extra-tags:
+    description: Extra tags to send with build scan.
     required: false
 outputs:
   init-script-path:

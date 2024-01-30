@@ -11,15 +11,17 @@ initscript {
     }
 }
 
-settingsEvaluated { settings ->
-    settings.pluginManager.apply(GradleEnterprisePlugin)
-    settings.pluginManager.apply(CommonCustomUserDataGradlePlugin)
+if (!gradle.parent) {
+    settingsEvaluated { settings ->
+        settings.pluginManager.apply(GradleEnterprisePlugin)
+        settings.pluginManager.apply(CommonCustomUserDataGradlePlugin)
 
-    settings.gradleEnterprise {
-        buildScan {
-            publishAlways()
-            termsOfServiceUrl = "https://gradle.com/terms-of-service"
-            termsOfServiceAgree = "yes"
+        settings.gradleEnterprise {
+            buildScan {
+                publishAlways()
+                termsOfServiceUrl = "https://gradle.com/terms-of-service"
+                termsOfServiceAgree = "yes"
+            }
         }
     }
 }
