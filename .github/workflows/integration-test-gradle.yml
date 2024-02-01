@@ -31,6 +31,9 @@ jobs:
     - name: Set up build scan
       id: setup-build-scan
       uses: ./
+      with:
+        tags: 'ci,${{ matrix.os }}'
+        links: 'vcs=https://github.com/bmuschko/setup-build-scan'
     - name: Execute Gradle build
       id: gradle
       working-directory: .github/sample-builds/gradle-build
