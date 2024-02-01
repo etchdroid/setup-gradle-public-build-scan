@@ -6,15 +6,15 @@ const TAGS_INPUT = 'tags'
 const LINKS_INPUT = 'links'
 
 export function getDevelocityPluginVersion(): string {
-    return core.getInput(DEVELOCITY_PLUGIN_VERSION_INPUT)
+    return getInput(DEVELOCITY_PLUGIN_VERSION_INPUT)
 }
 
 export function getCommonUserDataPluginVersion(): string {
-    return core.getInput(COMMON_USER_DATA_PLUGIN_VERSION_INPUT)
+    return getInput(COMMON_USER_DATA_PLUGIN_VERSION_INPUT)
 }
 
 export function getTags(): string[] {
-    const tags = core.getInput(TAGS_INPUT)
+    const tags = getInput(TAGS_INPUT)
 
     if (!tags) {
         return []
@@ -24,7 +24,7 @@ export function getTags(): string[] {
 }
 
 export function getLinks(): Map<string, string> {
-    const links = core.getInput(LINKS_INPUT)
+    const links = getInput(LINKS_INPUT)
 
     if (!links) {
         return new Map<string, string>()
@@ -35,4 +35,8 @@ export function getLinks(): Map<string, string> {
         acc.set(key.trim(), value.trim())
         return acc
     }, new Map<string, string>())
+}
+
+function getInput(name :string): string {
+    return core.getInput(name)
 }
