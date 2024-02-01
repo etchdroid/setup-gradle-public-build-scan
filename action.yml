@@ -10,8 +10,11 @@ inputs:
     description: Gradle plugin version that provides common user data with build scan.
     default: '1.12.1'
     required: false
-  extra-tags:
-    description: Extra tags to send with build scan.
+  tags:
+    description: Tags to send with build scan.
+    required: false
+  links:
+    description: Links to send with build scan.
     required: false
 outputs:
   init-script-path:

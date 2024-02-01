@@ -6,6 +6,8 @@ import {writeInitScript} from './templating'
 
 const DEVELOCITY_PLUGIN_VERSION_INPUT = 'develocity-gradle-plugin-version'
 const COMMON_USER_DATA_PLUGIN_VERSION_INPUT = 'common-user-data-plugin-version'
+const TAGS_INPUT = 'tags'
+const LINKS_INPUT = 'links'
 const INIT_SCRIPT_PATH_OUTPUT = 'init-script-path'
 const INIT_SCRIPT_TARGET_FILENAME = 'build-scan.gradle'
 
@@ -23,7 +25,19 @@ export async function setup(): Promise<void> {
         await writeInitScript(
             initScriptFile,
             core.getInput(DEVELOCITY_PLUGIN_VERSION_INPUT),
-            core.getInput(COMMON_USER_DATA_PLUGIN_VERSION_INPUT)
+            core.getInput(COMMON_USER_DATA_PLUGIN_VERSION_INPUT),
+            core
+                .getInput(TAGS_INPUT)
+                .split(',')
+                .map(s => s.trim()),
+            core
+                .getInput(LINKS_INPUT)
+                .split(',')
+                .reduce((acc, curr) => {
+                    const [key, value] = curr.split('=')
+                    acc.set(key.trim(), value.trim())
+                    return acc
+                }, new Map<string, string>())
         )
         core.setOutput(INIT_SCRIPT_PATH_OUTPUT, initScriptFile)
     } else {

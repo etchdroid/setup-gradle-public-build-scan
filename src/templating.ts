@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import * as lodash from 'lodash'
+import {Eta} from 'eta'
 import {readResourceFileAsString} from './build-env'
 
 const INIT_SCRIPT_TEMPLATE_FILENAME = 'build-scan-template.gradle'
@@ -7,15 +7,18 @@ const INIT_SCRIPT_TEMPLATE_FILENAME = 'build-scan-template.gradle'
 export async function writeInitScript(
     initScriptFile: string,
     gradleEnterprisePluginVersion: string,
-    commonUserDataPluginVersion: string
+    commonUserDataPluginVersion: string,
+    tags: string[],
+    links: Map<string, string>
 ): Promise<void> {
     const buildScanTemplate = readResourceFileAsString(INIT_SCRIPT_TEMPLATE_FILENAME)
     const templateVars = {
         gradleEnterprisePluginVersion,
-        commonUserDataPluginVersion
+        commonUserDataPluginVersion,
+        tags,
+        links
     }
-    lodash.templateSettings.interpolate = /\${([\s\S]+?)}/g
-    const compiled = lodash.template(buildScanTemplate)
-    const content = compiled(templateVars)
+    const eta = new Eta({views: buildScanTemplate})
+    const content = eta.renderString(buildScanTemplate, templateVars)
     fs.writeFileSync(initScriptFile, content)
 }
