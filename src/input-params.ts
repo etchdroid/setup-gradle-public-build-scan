@@ -37,6 +37,6 @@ export function getLinks(): Map<string, string> {
     }, new Map<string, string>())
 }
 
-function getInput(name :string): string {
+function getInput(name: string): string {
     return core.getInput(name)
 }
