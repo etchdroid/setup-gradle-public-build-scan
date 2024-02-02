@@ -4,7 +4,7 @@ author: 'Benjamin Muschko'
 inputs:
   develocity-gradle-plugin-version:
     description: Develocity Gradle plugin version that provides build scan functionality.
-    default: '3.16.1'
+    default: '3.16.2'
     required: false
   common-user-data-plugin-version:
     description: Gradle plugin version that provides common user data with build scan.
