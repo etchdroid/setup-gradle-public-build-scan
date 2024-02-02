@@ -18,5 +18,6 @@ jobs:
     name: Test
     uses: actions/reusable-workflows/.github/workflows/basic-validation.yml@a8533f184b279cfc1b2dd6a96ed2f097ccf81189
     with:
+      operating-systems: ubuntu-latest
       node-version: 20.x
       node-caching: npm
