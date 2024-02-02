@@ -1,9 +1,9 @@
 import * as core from '@actions/core'
 
-const DEVELOCITY_PLUGIN_VERSION_INPUT = 'develocity-gradle-plugin-version'
-const COMMON_USER_DATA_PLUGIN_VERSION_INPUT = 'common-user-data-plugin-version'
-const TAGS_INPUT = 'tags'
-const LINKS_INPUT = 'links'
+export const DEVELOCITY_PLUGIN_VERSION_INPUT = 'develocity-gradle-plugin-version'
+export const COMMON_USER_DATA_PLUGIN_VERSION_INPUT = 'common-user-data-plugin-version'
+export const TAGS_INPUT = 'tags'
+export const LINKS_INPUT = 'links'
 
 export function getDevelocityPluginVersion(): string {
     return getInput(DEVELOCITY_PLUGIN_VERSION_INPUT)
