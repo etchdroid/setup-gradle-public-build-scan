@@ -1,5 +1,4 @@
 import * as path from 'path'
-import * as os from 'os'
 import * as fs from 'fs'
 import * as tmp from 'tmp-promise'
 import {writeInitScript} from '../src/templating'
