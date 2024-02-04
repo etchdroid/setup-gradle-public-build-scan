@@ -52,7 +52,9 @@ describe('resolve input', () => {
     })
 
     it('for multiple links', async () => {
-        ;(getInput as jest.Mock).mockReturnValueOnce('{"Developer": "https://github.com/bmuschko", "Twitter": "bmuschko"}')
+        ;(getInput as jest.Mock).mockReturnValueOnce(
+            '{"Developer": "https://github.com/bmuschko", "Twitter": "bmuschko"}'
+        )
         const resolvedInputValue = inputParams.getLinks()
         expect(resolvedInputValue).toEqual(
             new Map<string, string>([
