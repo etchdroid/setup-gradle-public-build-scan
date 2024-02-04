@@ -1,5 +1,5 @@
-name: 'Setup build scan'
-description: 'Sets up Gradle build scan support in your GitHub Actions workflow.'
+name: 'Setup Gradle public build scan'
+description: 'Sets up Gradle public build scan support in your GitHub Actions workflow.'
 author: 'Benjamin Muschko'
 inputs:
   develocity-gradle-plugin-version:
