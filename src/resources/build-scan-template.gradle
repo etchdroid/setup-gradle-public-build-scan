@@ -13,21 +13,26 @@ initscript {
 
 if (!gradle.parent) {
     settingsEvaluated { settings ->
-        settings.pluginManager.apply(GradleEnterprisePlugin)
-        settings.pluginManager.apply(CommonCustomUserDataGradlePlugin)
+        if (!settings.pluginManager.hasPlugin('com.gradle.enterprise')) {
+            settings.pluginManager.apply(GradleEnterprisePlugin)
 
-        settings.gradleEnterprise {
-            buildScan {
-                publishAlways()
-                termsOfServiceUrl = "https://gradle.com/terms-of-service"
-                termsOfServiceAgree = "yes"
-                <% it.tags.forEach(function(tag){ %>
-                tag "<%= tag %>"
-                <% }) %>
-                <% it.links.forEach(function(value, key){ %>
-                link "<%= key %>", "<%= value %>"
-                <% }) %>
+            settings.gradleEnterprise {
+                buildScan {
+                    publishAlways()
+                    termsOfServiceUrl = "https://gradle.com/terms-of-service"
+                    termsOfServiceAgree = "yes"
+                    <% it.tags.forEach(function(tag){ %>
+                    tag "<%= tag %>"
+                    <% }) %>
+                    <% it.links.forEach(function(value, key){ %>
+                    link "<%= key %>", "<%= value %>"
+                    <% }) %>
+                }
             }
+        }
+
+        if (!settings.pluginManager.hasPlugin('com.gradle.common-custom-user-data-gradle-plugin')) {
+            settings.pluginManager.apply(CommonCustomUserDataGradlePlugin)
         }
     }
 }
