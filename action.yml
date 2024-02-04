@@ -5,11 +5,11 @@ inputs:
   develocity-gradle-plugin-version:
     description: Develocity Gradle plugin version that provides build scan functionality.
     default: '3.16.2'
-    required: false
+    required: true
   common-user-data-plugin-version:
     description: Gradle plugin version that provides common user data with build scan.
     default: '1.12.1'
-    required: false
+    required: true
   tags:
     description: Tags to send with build scan.
     required: false
@@ -18,7 +18,7 @@ inputs:
     required: false
 outputs:
   init-script-path:
-    description: "The path to the init script that sets up the build scan functionality."
+    description: The path to the init script that sets up the build scan functionality.
 runs:
   using: 'node20'
   main: 'dist/index.js'
