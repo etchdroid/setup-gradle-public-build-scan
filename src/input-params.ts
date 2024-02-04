@@ -38,10 +38,10 @@ function getInput(name: string): string {
 }
 
 function parseArray(input: string): string[] {
-    let result = []
+    const result = []
     const json = JSON.parse(input)
 
-    for (let item in json) {
+    for (const item in json) {
         result.push(json[item])
     }
 
@@ -49,10 +49,10 @@ function parseArray(input: string): string[] {
 }
 
 function parseMap(input: string): Map<string, string> {
-    let result = new Map<string, string>()
+    const result = new Map<string, string>()
     const json = JSON.parse(input)
 
-    for (let key in json) {
+    for (const key in json) {
         result.set(key, json[key])
     }
 
