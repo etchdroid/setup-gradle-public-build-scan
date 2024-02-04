@@ -28,19 +28,13 @@ describe('resolve input', () => {
     })
 
     it('for single tag', async () => {
-        ;(getInput as jest.Mock).mockReturnValueOnce('ci')
+        ;(getInput as jest.Mock).mockReturnValueOnce('["ci"]')
         const resolvedInputValue = inputParams.getTags()
         expect(resolvedInputValue).toStrictEqual(['ci'])
     })
 
     it('for multiple tags', async () => {
-        ;(getInput as jest.Mock).mockReturnValueOnce('ci,local')
-        const resolvedInputValue = inputParams.getTags()
-        expect(resolvedInputValue).toStrictEqual(['ci', 'local'])
-    })
-
-    it('for multiple tags with spaces', async () => {
-        ;(getInput as jest.Mock).mockReturnValueOnce(' ci, local ')
+        ;(getInput as jest.Mock).mockReturnValueOnce('["ci", "local"]')
         const resolvedInputValue = inputParams.getTags()
         expect(resolvedInputValue).toStrictEqual(['ci', 'local'])
     })
@@ -52,29 +46,18 @@ describe('resolve input', () => {
     })
 
     it('for single link', async () => {
-        ;(getInput as jest.Mock).mockReturnValueOnce('developer=https://github.com/bmuschko')
+        ;(getInput as jest.Mock).mockReturnValueOnce('{"Developer": "https://github.com/bmuschko"}')
         const resolvedInputValue = inputParams.getLinks()
-        expect(resolvedInputValue).toEqual(new Map<string, string>([['developer', 'https://github.com/bmuschko']]))
+        expect(resolvedInputValue).toEqual(new Map<string, string>([['Developer', 'https://github.com/bmuschko']]))
     })
 
     it('for multiple links', async () => {
-        ;(getInput as jest.Mock).mockReturnValueOnce('developer=https://github.com/bmuschko,twitter=bmuschko')
+        ;(getInput as jest.Mock).mockReturnValueOnce('{"Developer": "https://github.com/bmuschko", "Twitter": "bmuschko"}')
         const resolvedInputValue = inputParams.getLinks()
         expect(resolvedInputValue).toEqual(
             new Map<string, string>([
-                ['developer', 'https://github.com/bmuschko'],
-                ['twitter', 'bmuschko']
-            ])
-        )
-    })
-
-    it('for multiple links with spaces', async () => {
-        ;(getInput as jest.Mock).mockReturnValueOnce(' developer= https://github.com/bmuschko , twitter=bmuschko ')
-        const resolvedInputValue = inputParams.getLinks()
-        expect(resolvedInputValue).toEqual(
-            new Map<string, string>([
-                ['developer', 'https://github.com/bmuschko'],
-                ['twitter', 'bmuschko']
+                ['Developer', 'https://github.com/bmuschko'],
+                ['Twitter', 'bmuschko']
             ])
         )
     })

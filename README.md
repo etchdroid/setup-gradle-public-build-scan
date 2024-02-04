@@ -45,8 +45,8 @@ The action defines [inputs](https://docs.github.com/en/actions/creating-actions/
 |:--:|:--:|:--:|:--|
 |`develocity-gradle-plugin-version`|`true`|`3.16.2`|The Develocity Gradle plugin version that provides build scan functionality.|
 |`common-user-data-plugin-version`|`true`|`1.12.1`|The Gradle plugin version that provides common user data with build scan.|
-|`tags`|`false`|`null`|The extra tags to send with build scan.|
-|`links`|`false`|`null`|The extra links to send with build scan.|
+|`tags`|`false`|`null`|Tags to send with build scan defined in the format of a JSON array, e.g. `["integ-test", "ubuntu-latest"]`.|
+|`links`|`false`|`null`|Links to send with build scan defines in the format of a JSON map, e.g. `{"Developer": "https://github.com/bmuschko/"]}`.|
 
 ### Outputs
 
@@ -69,8 +69,8 @@ jobs:
       with:
         develocity-gradle-plugin-version: '3.16.1'
         common-user-data-plugin-version: '1.12.1'
-        tags: 'integ-test,ubuntu-latest'
-        links: 'Developer=https://github.com/bmuschko'
+        tags: '["integ-test", "ubuntu-latest"]'
+        links: '{"Developer": "https://github.com/bmuschko"}'
 
     - name: Print initialization script path
       env:

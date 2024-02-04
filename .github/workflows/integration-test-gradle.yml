@@ -32,8 +32,8 @@ jobs:
       id: setup-build-scan
       uses: ./
       with:
-        tags: 'integ-test,${{ matrix.os }}'
-        links: 'Developer=https://github.com/bmuschko'
+        tags: '["integ-test", "${{ matrix.os }}"]'
+        links: '{"Developer": "https://github.com/bmuschko"}'
     - name: Execute Gradle build
       id: gradle
       working-directory: .github/sample-builds/gradle-build

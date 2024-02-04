@@ -20,7 +20,7 @@ export function getTags(): string[] {
         return []
     }
 
-    return tags.split(',').map(s => s.trim())
+    return parseArray(tags)
 }
 
 export function getLinks(): Map<string, string> {
@@ -30,13 +30,31 @@ export function getLinks(): Map<string, string> {
         return new Map<string, string>()
     }
 
-    return links.split(',').reduce((acc, curr) => {
-        const [key, value] = curr.split('=')
-        acc.set(key.trim(), value.trim())
-        return acc
-    }, new Map<string, string>())
+    return parseMap(links)
 }
 
 function getInput(name: string): string {
     return core.getInput(name)
+}
+
+function parseArray(input: string): string[] {
+    let result = []
+    const json = JSON.parse(input)
+
+    for (let item in json) {
+        result.push(json[item])
+    }
+
+    return result
+}
+
+function parseMap(input: string): Map<string, string> {
+    let result = new Map<string, string>()
+    const json = JSON.parse(input)
+
+    for (let key in json) {
+        result.set(key, json[key])
+    }
+
+    return result
 }
