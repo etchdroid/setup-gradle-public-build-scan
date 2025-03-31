@@ -16,7 +16,7 @@ if (!gradle.parent) {
         if (!settings.pluginManager.hasPlugin('com.gradle.enterprise')) {
             settings.pluginManager.apply(GradleEnterprisePlugin)
 
-            settings.gradleEnterprise {
+            settings.develocity {
                 buildScan {
                     publishAlways()
                     termsOfServiceUrl = "https://gradle.com/terms-of-service"
